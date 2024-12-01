@@ -3,24 +3,23 @@ from django.db import models
 # Create your models here.
 
 
-class Buyer(models.Model):
-    name = models.CharField(max_length=30)
-    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+class Team(models.Model):
+    title = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
     age = models.CharField(max_length=3)
 
     def __str__(self):
-        return f'{self.name}, {self.age}'
+        return f'{self.title}, {self.city}'
 
 
-class Game(models.Model):
-    title = models.CharField(max_length=300, default='Game')
-    cost = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
-    size = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    description = models.TextField(default='Play for free')
-    age_limited = models.BooleanField(default=False)
-    buyer = models.ManyToManyField(Buyer, related_name='games', default=None)
+class Player(models.Model):
+    first_name = models.CharField(max_length=30, default='Ivan')
+    patronymic = models.CharField(max_length=30, default='Ivanovich')
+    family = models.CharField(max_length=30, default='Ivanov')
+    city = models.CharField(max_length=30, default='Burevestnik')
+    age = models.IntegerField(default=18, max_length=3)
+    teams = models.ManyToManyField(Team, related_name='teams', default=None)
 
     def __str__(self):
-        return self.title
-
-
+        lst = list(self.first_name)
+        return f'{self.family} {lst[0]}. - {self.city}'
